@@ -71,6 +71,19 @@ func (s *SmartCollectionServiceOp) List(options interface{}) ([]SmartCollection,
 	return resource.Collections, err
 }
 
+func (s *SmartCollectionServiceOp) ListWithPagination(options interface{}) ([]SmartCollection, *Pagination, error) {
+	path := fmt.Sprintf("%s.json", smartCollectionsBasePath)
+	resource := new(SmartCollectionsResource)
+
+	pagination, err := s.client.ListWithPagination(path, resource, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return resource.Collections, pagination, nil
+
+}
+
 // Count smart collections
 func (s *SmartCollectionServiceOp) Count(options interface{}) (int, error) {
 	path := fmt.Sprintf("%s/count.json", smartCollectionsBasePath)
